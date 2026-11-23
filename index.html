@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>합체 발명 연구소 | 카드 네 장으로 발명하기</title>
+<title>강제결합법으로 발명 아이디어 생각하기</title>
 <style>
   :root {
     color-scheme: light;
@@ -28,17 +28,6 @@
   button:disabled { cursor: default; }
   :focus-visible { outline: 3px solid #12816c; outline-offset: 3px; }
   .wrap { max-width: 1250px; width: calc(100% - 72px); margin-inline: auto; }
-  .top { background: #fff; border-bottom: 1px solid var(--line); }
-  .top .wrap { min-height: 66px; display: flex; align-items: center; gap: 13px; font-weight: 800; letter-spacing: -.04em; }
-  .mark {
-    width: 36px; height: 36px; border-radius: 11px; background: #daf4ea; position: relative; flex: none;
-  }
-  .mark::before, .mark::after {
-    position: absolute; content: ""; width: 13px; height: 17px; border-radius: 3px;
-    border: 1.5px solid #087a60; top: 9px; background: #daf4ea;
-  }
-  .mark::before { left: 9px; transform: rotate(-20deg); }
-  .mark::after { left: 15px; transform: rotate(17deg); background: #fff; }
   main { padding-block: clamp(32px, 5vw, 66px) 48px; }
   .hero { margin-bottom: 32px; }
   h1 { font-size: clamp(2rem, 4.8vw, 3.35rem); letter-spacing: -.085em; line-height: 1.18; }
@@ -112,7 +101,6 @@
   @media (max-width: 955px) { .wrap { width: calc(100% - 40px); } .workbench { grid-template-columns: 1fr; } }
   @media (max-width: 580px) {
     .wrap { width: calc(100% - 24px); }
-    .top .wrap { min-height: 58px; }
     .hero { margin-bottom: 23px; }
     .panel { border-radius: 16px; padding: 14px; }
     .panel-head { flex-wrap: wrap; gap: 8px; }
@@ -130,15 +118,38 @@
     .result-actions, .manual-copy { display: none !important; }
     .panel { box-shadow: none; }
   }
+
+  :root { --ink:#182333; --muted:#4d5d70; --line:#d9e2ea; --mint:#235da8; --mint-dark:#194580; --canvas:#f5f7fa;
+    font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif; }
+  .panel, .card { border-radius:14px; box-shadow:none; }
+  h1, h2, .card h3 { letter-spacing:-.035em; }
+  h1 { max-width:25ch; font-size:clamp(1.9rem,4.2vw,3.05rem); font-weight:780; }
+  .field { --card-bg:#f0f6ff; --card-line:#d8e6fa; --label:#245085; }
+  .problem { --card-bg:#fff7ee; --card-line:#f4e4d1; --label:#805324; }
+  .challenge { --card-bg:#f7f3fc; --card-line:#e9def5; --label:#664983; }
+  .card-icon { width:70px; height:70px; font-size:2.15rem; border-radius:14px; }
+  .card-icon:empty { display:none; }
+  .card { min-height:234px; }
+  .result-copy { background:#f5f8fd; }
+  .result-copy .feature-label { color:var(--muted); font-weight:700; font-size:.88rem; }
+  .concept { margin:0 0 18px; }
+  .concept canvas { display:block; width:100%; max-width:640px; height:auto; margin-inline:auto; border-radius:14px; }
+  .concept figcaption { font-size:.86rem; color:var(--muted); text-align:center; margin-top:6px; }
+  .evaluation { margin-top:24px; }
+  .rubric { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .rubric-item, .revision { background:#f7f9fc; padding:14px; border:1px solid var(--line); border-radius:12px; }
+  .rubric-item label, .revision label { display:block; font-weight:750; }
+  .rubric-item p,.revision p { color:var(--muted); line-height:1.5; font-size:.91rem; margin:5px 0 10px; }
+  .rubric-item select { width:100%; font:inherit; color:var(--ink); background:#fff; border:1px solid #c8d4e3; border-radius:8px; min-height:44px; padding:6px; }
+  .revision { margin-top:10px; }
+  .revision textarea { min-height:76px; }
+  @media(max-width:580px) { .card-icon { width:48px; height:48px; font-size:1.5rem; } .rubric { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
-  <header class="top">
-    <div class="wrap"><span class="mark" aria-hidden="true"></span><span>합체 발명 연구소</span></div>
-  </header>
   <main class="wrap">
     <div class="hero">
-      <h1>카드 네 장으로 발명하기</h1>
+      <h1>강제결합법으로 발명 아이디어 생각하기</h1>
       <p>두 분야에서 특징을 하나씩 골라 연결해 보세요. 어떤 불편을 해결할 수 있을까요?</p>
     </div>
 
@@ -149,19 +160,19 @@
           <button id="draw" type="button" class="button primary">카드 네 장 뽑기</button>
         </div>
         <div id="cards" class="cards"></div>
-        <p class="draw-note" id="draw-note" role="status"></p>
+        <p class="draw-note" id="draw-note" role="status" hidden></p>
       </section>
 
       <section class="panel" aria-labelledby="idea-title">
         <div class="panel-head"><h2 id="idea-title">발명 아이디어</h2></div>
-        <p class="form-intro">두 가지 아이디어를 떠올린 뒤, 문제를 더 잘 해결하는 쪽을 적어 보세요.</p>
+        <p class="form-intro">발명 아이디어를 생각해서 이름과 특징을 적어보세요.</p>
         <form id="idea-form">
           <div class="control">
             <label for="name">발명품 이름 <span class="optional">(선택)</span></label>
             <input type="text" id="name" maxlength="80" placeholder="예: 소리로 알려 주는 분리배출함">
           </div>
           <div class="control">
-            <label for="idea">내 아이디어</label>
+            <label for="idea">특징</label>
             <textarea id="idea" maxlength="2000" aria-describedby="idea-hint" required placeholder="예: 친구들이 분리배출을 헷갈릴 때, 버리려는 물건을 고르면 소리로 어느 칸에 넣을지 알려 주는 분리배출함을 만들고 싶어요."></textarea>
             <p id="idea-hint" class="idea-hint">누가 언제 불편한지, 두 특징을 어떻게 합칠지, 도전 조건을 어떻게 반영할지 적어 보세요.</p>
           </div>
@@ -173,10 +184,24 @@
     <section id="result" class="panel result" aria-labelledby="result-title" hidden>
       <div class="panel-head"><h2 id="result-title" tabindex="-1">발명 결과</h2><span class="pill">제출 완료</span></div>
       <dl id="result-cards" class="result-details"></dl>
+      <figure class="concept">
+        <canvas id="concept-image" width="880" height="260" role="img" aria-label="뽑은 카드로 만든 발명 아이디어 그림"></canvas>
+        <figcaption>카드 조합으로 그린 개념도</figcaption>
+      </figure>
       <div class="result-copy">
         <h3 id="result-name"></h3>
+        <p class="feature-label">특징</p>
         <p id="result-idea"></p>
       </div>
+      <section class="evaluation" aria-labelledby="evaluation-title">
+        <h3 id="evaluation-title">스스로 평가하기</h3>
+        <div id="rubric" class="rubric"></div>
+        <div class="revision">
+          <label for="refinement">다음에 다듬을 점</label>
+          <p id="next-tip" role="status">평가를 마치면 다음에 살펴볼 질문이 나와요.</p>
+          <textarea id="refinement" maxlength="1000" rows="2" placeholder="다음에 어떻게 바꿔 볼까요?"></textarea>
+        </div>
+      </section>
       <div class="result-actions">
         <button type="button" id="copy" class="button primary">결과 복사</button>
         <button type="button" id="edit" class="button outline">아이디어 수정</button>
@@ -351,9 +376,8 @@
       cardGrid.append(tile);
     });
 
-    drawNote.textContent = message || (drawn
-      ? state.swapped ? "한 장 교체를 사용했습니다. 새 조합을 뽑으면 다시 교체할 수 있어요." : "조합이 막히면 카드 한 장을 골라 한 번 다시 뽑을 수 있어요."
-      : "버튼을 눌러 분야 2장, 문제 1장, 도전 조건 1장을 뽑아 보세요.");
+    drawNote.textContent = message;
+    drawNote.hidden = !message;
   }
 
   function invalidateResult() {
@@ -361,6 +385,107 @@
     result.hidden = true;
     byId("copy-feedback").textContent = "";
     byId("manual-copy").hidden = true;
+  }
+
+  const criteria = [
+    ["독창성", "기존 물건과 다른 점이 있나요?", "두 분야에서 하나씩 가져온 특징을 짚어 보고, 기존 물건과 다른 점을 한 문장으로 써 보세요."],
+    ["유용성", "누구의 어떤 불편을 줄이나요?", "사용하는 사람과 상황을 정하고, 이 발명품을 쓰면 무엇이 편해지는지 적어 보세요."],
+    ["실현가능성", "재료와 만드는 방법을 설명할 수 있나요?", "가장 중요한 기능 하나를 골라 종이나 블록으로 작은 모형을 만들어 볼 방법을 생각해 보세요."],
+    ["경제성", "비용이나 재료를 아낄 수 있나요?", "돈이 가장 많이 들 것 같은 부품을 골라 더 저렴한 재료나 방법을 찾아보세요."]
+  ];
+  const levels = ["선택하기", "더 생각해 볼래요", "어느 정도 충족해요", "잘 충족해요"];
+  const reviewKey = "invention-review-v1";
+  const refinement = byId("refinement");
+  let ratings = [];
+
+  function signature() {
+    return JSON.stringify([state.ids, state.name.trim(), state.idea.trim()]);
+  }
+
+  function updateTip() {
+    const index = ratings.indexOf(Math.min(...ratings));
+    byId("next-tip").textContent = ratings.every(Boolean)
+      ? ratings.every(score => score === 3)
+        ? "예상 사용자가 발명품을 써 보는 장면을 스케치하고, 무엇을 먼저 확인할지 정해 보세요."
+        : criteria[index][0] + " · " + criteria[index][2]
+      : "평가를 마치면 다음에 살펴볼 질문이 나와요.";
+  }
+
+  function saveReview() {
+    updateTip();
+    try {
+      localStorage.setItem(reviewKey, JSON.stringify({ signature: signature(), ratings, note: refinement.value }));
+    } catch {}
+  }
+
+  function renderReview() {
+    let previous;
+    try { previous = JSON.parse(localStorage.getItem(reviewKey)); } catch {}
+    const matching = previous?.signature === signature();
+    ratings = criteria.map((_, i) => {
+      const score = matching ? previous.ratings?.[i] : 0;
+      return Number.isInteger(score) && score >= 1 && score <= 3 ? score : 0;
+    });
+    refinement.value = matching && typeof previous.note === "string" ? previous.note : "";
+    const rubric = byId("rubric");
+    rubric.replaceChildren();
+    criteria.forEach(([name, question], index) => {
+      const group = element("div", "rubric-item");
+      const label = element("label", "", name);
+      label.htmlFor = "rating-" + index;
+      const prompt = element("p", "", question);
+      prompt.id = "criterion-" + index;
+      const select = element("select");
+      select.id = label.htmlFor;
+      select.setAttribute("aria-describedby", prompt.id);
+      levels.forEach((level, i) => {
+        const option = element("option", "", level);
+        option.value = i;
+        select.append(option);
+      });
+      select.value = ratings[index];
+      select.addEventListener("change", () => {
+        ratings[index] = Number(select.value);
+        saveReview();
+      });
+      group.append(label, prompt, select);
+      rubric.append(group);
+    });
+    updateTip();
+  }
+
+  refinement.addEventListener("input", saveReview);
+
+  function drawConcept() {
+    const canvas = byId("concept-image");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const cards = slots.map((_, index) => getCard(index));
+    canvas.setAttribute("aria-label", cards.map(card => card.title).join(", ") + " 카드 조합 개념도");
+    ctx.fillStyle = "#eaf2ff";
+    ctx.fillRect(0, 0, 880, 260);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    cards.forEach((card, index) => {
+      const x = 125 + 210 * index;
+      ctx.fillStyle = ["#ffffff", "#ffffff", "#fff7ee", "#f8f2ff"][index];
+      ctx.beginPath();
+      ctx.roundRect(x - 59, 30, 118, 105, 24);
+      ctx.fill();
+      ctx.font = "52px system-ui";
+      ctx.fillText(card.icon, x, 83);
+      ctx.fillStyle = "#263e5b";
+      ctx.font = "bold 19px system-ui";
+      ctx.fillText(card.title, x, 161, 190);
+      if (index < cards.length - 1) {
+        ctx.fillStyle = "#557597";
+        ctx.font = "28px system-ui";
+        ctx.fillText(index === 0 ? "+" : "·", x + 105, 84);
+      }
+    });
+    ctx.fillStyle = "#16385d";
+    ctx.font = "bold 25px system-ui";
+    ctx.fillText(state.name.trim() || "내 발명 구상", 440, 222, 800);
   }
 
   function showResult(moveFocus = false) {
@@ -376,6 +501,8 @@
     });
     byId("result-name").textContent = state.name.trim() || "내 발명 아이디어";
     byId("result-idea").textContent = state.idea.trim();
+    drawConcept();
+    renderReview();
     result.hidden = false;
     if (moveFocus) byId("result-title").focus();
   }
@@ -416,7 +543,9 @@
       const card = getCard(index);
       return slot.label + " — " + card.title + " | " + card.description;
     });
-    const summary = [byId("result-name").textContent, ...conditions, "", state.idea.trim()].join("\n");
+    const review = criteria.flatMap(([name], i) => ratings[i] ? [name + " — " + levels[ratings[i]]] : []);
+    const note = refinement.value.trim();
+    const summary = [byId("result-name").textContent, ...conditions, "", "특징 — " + state.idea.trim(), ...review, ...(note ? ["다음에 다듬을 점 — " + note] : [])].join("\n");
     const feedback = byId("copy-feedback");
     const manual = byId("manual-copy");
     try {
